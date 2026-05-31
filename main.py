@@ -160,8 +160,11 @@ while running:
             if damage[0] >= 1:
                 pygame.mixer.Sound("assets/sfx/hurt.mp3").play()
                 enemy_alive = enemy.hurt(damage[0], weapon.attacks[selected_attack].dmg_type)
+                
             else:
                 enemy_alive = True
+                player.hurt(1, "physical")
+                pygame.mixer.Sound("assets/sfx/hurt.mp3").play()
 
             if damage[2] and roll_results.count(False) == 0:
                 for effect in damage[2]:
@@ -186,11 +189,6 @@ while running:
             pygame.mixer.Sound("assets/sfx/hurt.mp3").play()
         else:
             player_alive = True
-
-        if enemy_atk and enemy_damage_raw[2] and enemy_roll_results.count(False) == 0:
-            for effect in enemy_damage_raw[2]:
-                if effect in ("res_up", "res_down", "def_up", "def_down", "burn"):
-                    player.effects[effect] = enemy_damage_raw[2][effect]
 
         if not player_alive:
             running = False
